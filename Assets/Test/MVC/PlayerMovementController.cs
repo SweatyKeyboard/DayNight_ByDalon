@@ -1,15 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovementController : MonoBehaviour
+public class PlayerMovementController : MovementController
 {
     private BoxCollider2D boxCollider2D;
     private Transform childCamera;
 
-    private PlayerMovementView view;
-    [SerializeField] private PlayerDataModel dataModel;
-    [SerializeField] private PlayerInput input;
     [SerializeField] private PlayerStateController playerStateController;
 
     #region Коллизия
@@ -30,11 +25,10 @@ public class PlayerMovementController : MonoBehaviour
     /// Проверка коллизии по направлению взгляда.
     /// </summary>
     /// <returns></returns>
-    public bool IsCollisionWall() => IsCollision(dataModel.IsLeft ? Vector2.left : Vector2.right);
+    public bool IsCollisionWall() => IsCollision(model.IsLeft ? Vector2.left : Vector2.right);
     #endregion
 
-    public bool IsAlive => dataModel.Health > 0;
-    public bool ControlEnabled => IsAlive;  // && !GameManager.IsPause;
+    public bool ControlEnabled => model.IsAlive;  // && !GameManager.IsPause;
 
     private void Awake()
     {
@@ -56,26 +50,33 @@ public class PlayerMovementController : MonoBehaviour
         Movement();
     }
 
-    public void Input()
+    protected override void Input()
     {
         if (input.JumpButton)
-            view.Jump(dataModel.JumpForce);
+            view.Jump(model.JumpForce);
 
     }
-    public void Movement()
+    protected override void Movement()
     {
-        view.ControlFallingSpeed(dataModel.FallingSpeed);
+        view.ControlFallingSpeed(model.FallingSpeed);
 
         if (!ControlEnabled) return;
 
-        if (input.X > 0 && dataModel.IsLeft || input.X < 0 && !dataModel.IsLeft)
-            dataModel.IsLeft = view.Flip(dataModel.IsLeft, childCamera);
-        if (!Mathf.Approximately(input.X, 0)&&IsCollisionWall())
-            view.Move(input.X, dataModel.Speed);
-        
+        Flip();
+        Move();
+    }
+    private void Move()
+    {
+        if (!Mathf.Approximately(input.X, 0) && IsCollisionWall())
+            view.Move(input.X, model.Speed);
+    }
+    private void Flip()
+    {
+        if (input.X > 0 && model.IsLeft || input.X < 0 && !model.IsLeft)
+            model.IsLeft = view.Flip(model.IsLeft, childCamera);
     }
 
-    private void Init()
+    protected override void Init()
     {
         view = new PlayerMovementView(GetComponent<Rigidbody2D>(), transform);
     }
@@ -96,7 +97,7 @@ public class PlayerMovementController : MonoBehaviour
         #region Gizmos Wall
         if (IsCollisionWall()) Gizmos.color = Color.red;
         else Gizmos.color = Color.blue;
-        if (dataModel.IsLeft)
+        if (model.IsLeft)
         {
             Gizmos.DrawRay(boxCollider2D.bounds.min, Vector2.left * rayDistanceGround);
             Gizmos.DrawRay(new Vector2(boxCollider2D.bounds.min.x, boxCollider2D.bounds.max.y), Vector2.left * rayDistanceGround);

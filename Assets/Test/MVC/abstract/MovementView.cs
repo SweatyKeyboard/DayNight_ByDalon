@@ -2,15 +2,7 @@ using UnityEngine;
 
 public abstract class MovementView 
 {
-    protected readonly Rigidbody2D rb2D;
-    protected readonly Transform transform;
-
-    protected MovementView(Rigidbody2D rb2D, Transform transform)
-    {
-        this.rb2D = rb2D;
-        this.transform = transform;
-    }
-
+    
     /// <summary>
     /// Передвижение персонажа
     /// </summary>

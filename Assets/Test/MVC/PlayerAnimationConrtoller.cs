@@ -1,11 +1,9 @@
 using UnityEngine;
 using Spine.Unity;
 
-public class PlayerAnimationConrtoller : MonoBehaviour
+public class PlayerAnimationConrtoller : AnimationConrtoller<AnimationReferenceAsset>
 {
     [SerializeField] private SkeletonAnimation animator;
-    [SerializeField] private PlayerAnimationModel model;
-    private AnimationView<AnimationReferenceAsset> view;
 
     private void Start()
     {
@@ -14,11 +12,7 @@ public class PlayerAnimationConrtoller : MonoBehaviour
         SetCharacterAnimation(model.CurrentAnimation);
     }
 
-    /// <summary>
-    /// Переключение анимации.
-    /// </summary>
-    /// <param name="animation"></param>
-    public void SetCharacterAnimation(AllAnimations animation)
+    protected override void SetCharacterAnimation(AllAnimations animation)
     {
         switch (animation)
         {
@@ -52,7 +46,7 @@ public class PlayerAnimationConrtoller : MonoBehaviour
         }
         model.CurrentAnimation = animation;
     }
-    private void Init()
+    protected override void Init()
     {
         view = new PlayerAnimationView(animator);
     }

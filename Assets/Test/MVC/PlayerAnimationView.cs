@@ -9,13 +9,6 @@ public class PlayerAnimationView : AnimationView<AnimationReferenceAsset>
         this.animator = animator;
     }
     
-    /// <summary>
-    /// Замена анимации на 0й дорожке.
-    /// </summary>
-    /// <param name="animation"></param>
-    /// <param name="loop"></param>
-    /// <param name="timeScale"></param>
-    /// <param name="trackIndex"></param>
     public override void SetAnimation(AnimationReferenceAsset animation, bool loop)
     {
         if (animation.Animation == animator.state.GetCurrent(0).Animation) return;
@@ -25,13 +18,6 @@ public class PlayerAnimationView : AnimationView<AnimationReferenceAsset>
         animationEntry.Complete += AnimationEntry_Complete;
         animationEntry.TimeScale = 1f;
     }
-    /// <summary>
-    /// Добавление анимации на 1ю дорожку.
-    /// </summary>
-    /// <param name="animation"></param>
-    /// <param name="loop"></param>
-    /// <param name="trackIndex"></param>
-    /// <param name="delay"></param>
     public override void AddAnimation(AnimationReferenceAsset animation, bool loop, int trackIndex = 1)
     {
         if (animator.state.GetCurrent(trackIndex) != null) return;

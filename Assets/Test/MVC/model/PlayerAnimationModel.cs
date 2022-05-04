@@ -2,7 +2,7 @@ using UnityEngine;
 using Spine.Unity;
 
 [System.Serializable]
-public class PlayerAnimationModel
+public class PlayerAnimationModel : AnimationModel<AnimationReferenceAsset>
 {
     [Header("Spine Animations")]
     [SerializeField] private AnimationReferenceAsset _idle;
@@ -18,16 +18,16 @@ public class PlayerAnimationModel
     [SerializeField] private AllAnimations _currentAnimation = AllAnimations.Idle;
     [SerializeField] private AllAnimations _previousAnimation;
 
-    public AnimationReferenceAsset Idle => _idle;
-    public AnimationReferenceAsset Walk => _walk;
-    public AnimationReferenceAsset Jump => _jump;
-    public AnimationReferenceAsset Falling => _falling;
-    public AnimationReferenceAsset Attack => _attack;
-    public AnimationReferenceAsset AttackStanding => _attackStanding;
-    public AnimationReferenceAsset Damage => _damage;
-    public AnimationReferenceAsset Death => _death;
+    public override AnimationReferenceAsset Idle => _idle;
+    public override AnimationReferenceAsset Walk => _walk;
+    public override AnimationReferenceAsset Jump => _jump;
+    public override AnimationReferenceAsset Falling => _falling;
+    public override AnimationReferenceAsset Attack => _attack;
+    public override AnimationReferenceAsset AttackStanding => _attackStanding;
+    public override AnimationReferenceAsset Damage => _damage;
+    public override AnimationReferenceAsset Death => _death;
 
-    public AllAnimations CurrentAnimation
+    public override AllAnimations CurrentAnimation
     {
         get => _currentAnimation;
         set
@@ -36,9 +36,9 @@ public class PlayerAnimationModel
             _currentAnimation = value;
         }
     }
-    public AllAnimations PreviousAnimation
+    public override AllAnimations PreviousAnimation
     {
         get => _previousAnimation;
-        private set => _previousAnimation = value;
+        protected set => _previousAnimation = value;
     }
 }

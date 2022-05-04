@@ -1,9 +1,14 @@
 using UnityEngine;
 
 public class PlayerMovementView : MovementView
-{    
-    public PlayerMovementView(Rigidbody2D rb2D, Transform transform) :base(rb2D,transform)
-    {     
+{
+    protected readonly Rigidbody2D rb2D;
+    protected readonly Transform transform;
+
+    public PlayerMovementView(Rigidbody2D rb2D, Transform transform)
+    {
+        this.rb2D = rb2D;
+        this.transform = transform;
     }
 
     public override void Move(float x, float speed)
