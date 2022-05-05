@@ -1,15 +1,53 @@
 using Spine;
 using Spine.Unity;
+using UnityEngine;
+
 public class PlayerAnimationView : AnimationView<AnimationReferenceAsset>
 {
     private readonly SkeletonAnimation animator;
+    private readonly AnimationModel<AnimationReferenceAsset> model;
 
-    public PlayerAnimationView(SkeletonAnimation animator)
+    public PlayerAnimationView(SkeletonAnimation animator ,AnimationModel<AnimationReferenceAsset> model)
     {
         this.animator = animator;
+        this.model = model;
     }
-    
-    public override void SetAnimation(AnimationReferenceAsset animation, bool loop)
+
+    public override void SetCharacterAnimation(AllAnimations animation)
+    {
+        switch (animation)
+        {
+            case AllAnimations.Idle:
+                SetAnimation(model.Idle, true);
+                break;
+            case AllAnimations.Walk:
+                SetAnimation(model.Walk, true);
+                break;
+            case AllAnimations.Jump:
+                SetAnimation(model.Jump, false);
+                break;
+            case AllAnimations.Falling:
+                SetAnimation(model.Falling, true);
+                break;
+            case AllAnimations.Attack:
+                AddAnimation(model.Attack, false);
+                return;
+            case AllAnimations.AttackStanding:
+                AddAnimation(model.AttackStanding, false);
+                return;
+            case AllAnimations.Damage:
+                AddAnimation(model.Damage, false);
+                return;
+            case AllAnimations.Death:
+                SetAnimation(model.Death, false);
+                break;
+            default:
+                Debug.LogError("Нет такой анимации");
+                break;
+        }
+        model.CurrentAnimation = animation;
+    }
+    protected override void SetAnimation(AnimationReferenceAsset animation, bool loop)
     {
         if (animation.Animation == animator.state.GetCurrent(0).Animation) return;
 
@@ -18,7 +56,7 @@ public class PlayerAnimationView : AnimationView<AnimationReferenceAsset>
         animationEntry.Complete += AnimationEntry_Complete;
         animationEntry.TimeScale = 1f;
     }
-    public override void AddAnimation(AnimationReferenceAsset animation, bool loop, int trackIndex = 1)
+    protected override void AddAnimation(AnimationReferenceAsset animation, bool loop, int trackIndex = 1)
     {
         if (animator.state.GetCurrent(trackIndex) != null) return;
 

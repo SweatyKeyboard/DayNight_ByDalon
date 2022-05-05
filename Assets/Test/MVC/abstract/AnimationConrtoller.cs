@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public abstract class AnimationConrtoller<Animation> : MonoBehaviour
+public abstract class AnimationConrtoller<AnimationClip> : MonoBehaviour
 {
-    [SerializeField] protected AnimationModel<Animation> model;
-    protected AnimationView<Animation> view;
+    [SerializeField] protected AnimationModel<AnimationClip> model;
+    protected AnimationView<AnimationClip> view;
 
     /// <summary>
     /// Переключение анимации.
     /// </summary>
     /// <param name="animation"></param>
-    protected abstract void SetCharacterAnimation(AllAnimations animation);
+    public abstract void SetAnimation(AllAnimations animation);
     protected abstract void Init();
 }
 

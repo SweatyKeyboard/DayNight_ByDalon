@@ -1,4 +1,4 @@
-public abstract class AnimationView<Animation>
+public abstract class AnimationView<AnimationClip>
 {
 
     /// <summary>
@@ -6,12 +6,17 @@ public abstract class AnimationView<Animation>
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="loop"></param>
-    public abstract void SetAnimation(Animation animation, bool loop);
+    protected abstract void SetAnimation(AnimationClip animation, bool loop);
     /// <summary>
     /// Добавление анимации на 1ю дорожку.
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="loop"></param>
     /// <param name="trackIndex"></param>
-    public abstract void AddAnimation(Animation animation, bool loop, int trackIndex = 1);
+    protected abstract void AddAnimation(AnimationClip animation, bool loop, int trackIndex = 1);
+    /// <summary>
+    /// Переключение анимации
+    /// </summary>
+    /// <param name="animation"></param>
+    public abstract void SetCharacterAnimation(AllAnimations animation);
 }
