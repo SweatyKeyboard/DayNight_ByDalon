@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b87f18a7da858ad45b8d81d59526ee77, type: 3}
+  m_Name: Standart
+  m_EditorClassIdentifier: 
+  time:
+    _day: 1
+    _hour: 6
+    _minute: 0
+    _seconds: 0
+  defaultDay: 1
+  defaultHour: 8
+  defaultMinute: 0
+  defaultSeconds: 0
+  defaultStepGameSeconds: 1
+  defaultStepRealSeconds: 1
+  countHourInDay: 24
+  countMinuteInHour: 60
+  countSecondInMinute: 60
